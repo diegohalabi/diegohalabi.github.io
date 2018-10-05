@@ -203,8 +203,8 @@ code {
 .footer {
   padding: 25px 0;
   text-align: center;
-  margin-top: -180px;
-  height: 180px;
+  position: fixed;
+  bottom: 0;
 }
 
 .footer-links {
