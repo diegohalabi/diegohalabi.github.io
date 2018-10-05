@@ -6,20 +6,10 @@
     <description>Recent content in Posts on A Hugo website</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 04 Oct 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 30 Dec 2016 21:49:57 -0700</lastBuildDate>
     
 	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>Elección del test estadístico con variables numéricas</title>
-      <link>/2018/10/04/eleccion-del-test-estadistico-con-variables-numericas/</link>
-      <pubDate>Thu, 04 Oct 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/2018/10/04/eleccion-del-test-estadistico-con-variables-numericas/</guid>
-      <description>Introducción Una de las situaciones más comunes en investigación de ciencias médicas, es medir una variable numérica que se separa entre 2 o más grupos. Por ejemplo, en una investigación podría comparar cómo mejora la presión arterial entre pacientes sometidos a 2 tratamientos diferentes, o evaluar la producción una proteína en células expuestas a distintas dosis de un fármaco.
-En estos casos, nos interesa saber si el promedio y/o la dispersión de la variable es diferente entre los grupos.</description>
-    </item>
     
     <item>
       <title>A Plain Markdown Post</title>
@@ -49,6 +39,16 @@ summary(cars) ## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 2
       
       <guid>/2015/01/01/lorem-ipsum/</guid>
       <description>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</description>
+    </item>
+    
+    <item>
+      <title>Elección del test estadístico con variables numéricas</title>
+      <link>/1/01/01/eleccion-del-test-estadistico-con-variables-numericas/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/eleccion-del-test-estadistico-con-variables-numericas/</guid>
+      <description>Introducción Una de las situaciones más comunes en investigación de ciencias médicas, es medir una variable numérica que se separa entre 2 o más grupos. Por ejemplo, en una investigación podría comparar cómo mejora la presión arterial entre pacientes sometidos a 2 tratamientos diferentes, o evaluar la producción una proteína en células expuestas a distintas dosis de un fármaco.
+En estos casos, nos interesa saber si el promedio y/o la dispersión de la variable es diferente entre los grupos.</description>
     </item>
     
   </channel>
