@@ -12,12 +12,12 @@
     
     
     <item>
-      <title>Algorithm to analize numeric variables</title>
-      <link>/2018/10/05/algorithm-to-analize-numeric-variables/</link>
+      <title>A simple algorithm to analize numerial variables</title>
+      <link>/2018/10/05/algorithm-to-analize-numerical-variables/</link>
       <pubDate>Fri, 05 Oct 2018 00:00:00 +0000</pubDate>
       
-      <guid>/2018/10/05/algorithm-to-analize-numeric-variables/</guid>
-      <description>A simple algorithm to basic analisys of numeric data.
+      <guid>/2018/10/05/algorithm-to-analize-numerical-variables/</guid>
+      <description>I created this simple algorithm to perform basic analysis of numerical data.
  </description>
     </item>
     
@@ -27,7 +27,7 @@
       <pubDate>Thu, 05 May 2016 21:48:51 -0700</pubDate>
       
       <guid>/about/</guid>
-      <description>This is a &amp;ldquo;hello world&amp;rdquo; example website for the blogdown package. The theme was forked from @jrutheiser/hugo-lithium-theme and modified by Diego Halabi.</description>
+      <description>My name is Diego Halabi, Doctor in Dental Surgery (DDS) and Doctor in Medical Science (PhD). I love to learn new hacking tools, and use them to improve my medical research.</description>
     </item>
     
   </channel>
