@@ -201,12 +201,10 @@ code {
 }
 
 .footer {
-  position: relative;
-  bottom: 0;
-  width: 100%;
   padding: 25px 0;
   text-align: center;
-  background-color: #ffeee6;
+  margin-top: -180px;
+  height: 180px;
 }
 
 .footer-links {
