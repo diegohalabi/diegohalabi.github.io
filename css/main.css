@@ -201,6 +201,7 @@ code {
 }
 
 .footer .push{
+  height: 155px
   padding: 25px 0;
   text-align: center;
 }
