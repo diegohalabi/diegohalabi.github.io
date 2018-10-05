@@ -200,12 +200,9 @@ code {
   border-bottom-color: #222;
 }
 
-.footer {
+.footer .push{
   padding: 25px 0;
   text-align: center;
-  position: absolute;
-  bottom: 0;
-  background-color: #000;
 }
 
 .footer-links {
