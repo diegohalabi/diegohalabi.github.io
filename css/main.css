@@ -200,8 +200,7 @@ code {
   border-bottom-color: #222;
 }
 
-.footer .push{
-  height: 155px
+.footer {
   padding: 25px 0;
   text-align: center;
 }
