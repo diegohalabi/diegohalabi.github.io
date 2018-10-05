@@ -201,7 +201,7 @@ code {
 }
 
 .footer {
-  position: absolute;
+  position: relative;
   bottom: 0;
   width: 100%;
   padding: 25px 0;
