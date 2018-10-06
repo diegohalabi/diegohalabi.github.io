@@ -19,11 +19,6 @@
 
 
 
-
-<link href='//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css' rel='stylesheet' type='text/css' />
-
-
-
 <link rel="stylesheet" href="/css/fonts.css" media="all">
 <link rel="stylesheet" href="/css/main.css" media="all">
 
@@ -107,14 +102,6 @@
 <h2>Gráfico cuantil-cuantil (Q-Q plot)</h2>
 <p>Finalmente, podemos evaluar la normalidad en forma visual con el Q-Q plot. Este gráfico compara los cuantiles de una muestra real con los cuantiles teóricos de una distribución de probabilidad.</p>
 <p>Si recordamos, un cuantil es una división en partes iguales de un set de datos. Por ejemplo, si tenemos 100 observaciones entre 1.6 m y 1.8 m, los cuantiles teóricos se formarán dividiendo en 100 partes iguales el rango 1.6-1.8, obteniendo 100 cuantiles de 0.2 m en el eje Y. Estos cuantiles teóricos se comparan con las 100 observaciones reales en nuestro set de datos, obteniendo una correlación (fig 3).</p>
-<pre class="r"><code>n &lt;- seq(.5,2,length=1000)
-x &lt;- rnorm(n,mean=1.7,sd=.075)
-df &lt;- data.frame(x)
-ggplot(df,aes(sample=x))+
-  stat_qq()+stat_qq_line(color=&#39;red&#39;)+
-  scale_y_continuous(name=&#39;Estatura (m)&#39;)+
-  scale_x_continuous(name=&#39;Teorico&#39;)+
-  labs(caption=&#39;Figura 3&#39;)</code></pre>
 <p><img src="/post/2018-10-05-analisis-de-variables-cuantitativas_files/figure-html/unnamed-chunk-3-1.png" width="336" /></p>
 <p>Si utilizamos R (recomendado), la función ‘qqpnorm()’ permite crear fácilmente este gráfico. En la figura 3, se han utilizado los mismos datos que en la figura 2, y se puede observar como las observaciones (puntos) se ajustan a la curva teórica (línea roja), lo que sugiere normalidad.</p>
 </div>
@@ -184,18 +171,6 @@ ggplot(df,aes(sample=x))+
 
     </div>
     
-
-
-
-<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-
-
-
-<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/r.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
-<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
-
-
 
     
 
