@@ -19,11 +19,6 @@
 
 
 
-
-<link href='//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css' rel='stylesheet' type='text/css' />
-
-
-
 <link rel="stylesheet" href="/css/fonts.css" media="all">
 <link rel="stylesheet" href="/css/main.css" media="all">
 
@@ -83,11 +78,11 @@
 <p>Una forma sencilla de entender la distribución normal, es imaginar la estatura en una sala con 100 estudiantes. La mayoría de ellos tendrá una estatura promedio, por lo que podríamos agrupar una gran frecuencia de estudiantes que miden 1.70 m en el centro de la distribución. A medida que la estatura aumenta, la frecuencia de estudiantes va disminuyendo, de la misma forma que en las estaturas más bajas.</p>
 <p><img src="/post/2018-10-05-analisis-de-variables-cuantitativas_files/figure-html/unnamed-chunk-2-1.png" width="336" /></p>
 <p>En la figura 2, podemos observar que la distribución normal tiene algunas características que la definen:</p>
-<ul>
+<ol style="list-style-type: decimal">
 <li>Una gran cantidad de datos agrupados al centro, y pocos en los extremos.</li>
 <li>La línea roja muestra el promedio (1.70 m), y coincide con la mediana. Ergo, su forma es simétrica.</li>
 <li>Debe tener un número mínimo para lograr su formarse, aproximadamente &gt; 15 observaciones.</li>
-</ul>
+</ol>
 <p>Para poder evaluar el ajuste de nuestros datos a la distribución normal, disponemos de muchas herramientas, por lo que nos centraremos en la visualización gráfica, el test de Shapiro Wilk, el test D’agostino Pearson Omnibus, y la representación gráfica de cuantil-cuantil.</p>
 <div id="shapiro-wilk" class="section level3">
 <h3>1.1. Shapiro Wilk</h3>
@@ -112,11 +107,12 @@
 <h1>2. Comparando 2 medias</h1>
 <p>Una situación muy común en investigación, es medir una variable numérica separada en 2 grupos. Entonces, la estadística nos ayudará a responder si las diferencias que observamos en el promedio (o mediana) se deben al azar, o bien, si podemos extrapolarlas a la población.</p>
 <p>En el ejemplo de la figura 4, se observan los resultados en la producción de insluina de cultivos de hepatocitos, que provienen de ratones hipertensos y controles (2 grupos).</p>
-<pre><code>## Warning: Removed 1 rows containing non-finite values (stat_boxplot).</code></pre>
 <p><img src="/post/2018-10-05-analisis-de-variables-cuantitativas_files/figure-html/unnamed-chunk-4-1.png" width="288" /></p>
 <p>¿Producen más insluina los ratones controles? ¿Es significativa esa diferencia?</p>
 <div id="t-test" class="section level3">
 <h3>2.1. t-test</h3>
+<p>Compara el promedio y las desviaciones estándar de 2 grupos. Puede ser dependiente o independiente.</p>
+<p>Requiere que la muestra sea paramétrica (distribución normal).</p>
 </div>
 <div id="u-mann-withney-y-wilcoxon" class="section level3">
 <h3>2.2. U Mann-Withney y Wilcoxon</h3>
@@ -126,7 +122,6 @@
 <h1>3. Comparando más de 2 medias</h1>
 <p>Si deseamos comparar más de 2 grupos, no podemos utilizar t-test o alguna de sus aproximaciones <em>no-paramétricas</em> repitiéndolo varias veces, ya que se pierde potencia estadística considerablemente por cada grupo extra.</p>
 <p>Es importante remarcar que los test presentados acá solo permiten identificar si un grupo es diferente al resto. si queremos saber cuál o cuáles grupos son diferentes, debemos realizar un análisis <em>post-hoc</em> posterior.</p>
-<pre><code>## Warning: Removed 3 rows containing non-finite values (stat_boxplot).</code></pre>
 <p><img src="/post/2018-10-05-analisis-de-variables-cuantitativas_files/figure-html/unnamed-chunk-5-1.png" width="336" /></p>
 <div id="homogeneidad-de-las-varianzas" class="section level3">
 <h3>3.1. Homogeneidad de las varianzas</h3>
@@ -179,18 +174,6 @@
 
     </div>
     
-
-
-
-<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-
-
-
-<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/r.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
-<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
-
-
 
     
 
