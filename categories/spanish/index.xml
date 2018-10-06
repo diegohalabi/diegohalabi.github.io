@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Diego Halabi</title>
-    <link>/</link>
-    <description>Recent content on Diego Halabi</description>
+    <title>Spanish on Diego Halabi</title>
+    <link>/categories/spanish/</link>
+    <description>Recent content in Spanish on Diego Halabi</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 06 Oct 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/categories/spanish/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -19,27 +19,6 @@
       <guid>/2018/10/06/analisis-de-variables-cuantitativas/</guid>
       <description>Introducción Una de las situaciones más comunes en investigación de ciencias médicas, es medir una variable numérica que se separa entre 2 o más grupos. Por ejemplo, en una investigación podría comparar cómo mejora la presión arterial entre pacientes sometidos a 2 tratamientos diferentes, o evaluar la producción una proteína en células expuestas a distintas dosis de un fármaco.
 En estos casos, nos interesa saber si el promedio y/o la dispersión de la variable es diferente entre los grupos.</description>
-    </item>
-    
-    <item>
-      <title>A simple algorithm to analize numerical variables</title>
-      <link>/2018/10/05/algorithm-to-analize-numerical-variables/</link>
-      <pubDate>Fri, 05 Oct 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/2018/10/05/algorithm-to-analize-numerical-variables/</guid>
-      <description>I created this simple algorithm to perform basic analysis of numerical data.
- </description>
-    </item>
-    
-    <item>
-      <title>About</title>
-      <link>/about/</link>
-      <pubDate>Thu, 05 May 2016 21:48:51 -0700</pubDate>
-      
-      <guid>/about/</guid>
-      <description>My name is Diego Halabi, Doctor in Dental Surgery (DDS) and Doctor in Medical Science (PhD).
-I love to learn new hacking tools, and use them to improve my medical research.
-Some of my articles are in Spanish, because I develop educational material for my University, in Chile.</description>
     </item>
     
   </channel>

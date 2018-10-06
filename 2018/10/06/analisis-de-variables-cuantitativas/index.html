@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.49" />
+
+
+<title>[Spanish] Análisis de variables cuantitativas - Diego Halabi</title>
+<meta property="og:title" content="[Spanish] Análisis de variables cuantitativas - Diego Halabi">
+
+
+
+  
+
+
+
+
+
+
+
+
+<link href='//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
+<link rel="stylesheet" href="/css/fonts.css" media="all">
+<link rel="stylesheet" href="/css/main.css" media="all">
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+  <a href="/" class="nav-logo">
+    <img src="/images/logo.png"
+         width="50"
+         height="50"
+         alt="Dh">
+  </a>
+
+  <ul class="nav-links">
+    
+    <li><a href="/about/">About</a></li>
+    
+    <li><a href="https://github.com/diegohalabi">GitHub</a></li>
+    
+    <li><a href="https://www.ncbi.nlm.nih.gov/pubmed/?term=Halabi&#43;D%5BAuthor%5D&#43;&#43;AND&#43;Austral">Publications</a></li>
+    
+  </ul>
+</nav>
+
+      </header>
+
+
+<main class="content" role="main">
+
+  <article class="article">
+    
+    <span class="article-duration">5 min read</span>
+    
+
+    <h1 class="article-title">[Spanish] Análisis de variables cuantitativas</h1>
+
+    
+    <span class="article-date">2018/10/06</span>
+    
+
+    <div class="article-content">
+      <div id="introduccion" class="section level1">
+<h1>Introducción</h1>
+<p>Una de las situaciones más comunes en investigación de ciencias médicas, es medir una variable numérica que se separa entre 2 o más grupos. Por ejemplo, en una investigación podría comparar cómo mejora la presión arterial entre pacientes sometidos a 2 tratamientos diferentes, o evaluar la producción una proteína en células expuestas a distintas dosis de un fármaco.</p>
+<p>En estos casos, nos interesa saber si el promedio y/o la dispersión de la variable es diferente entre los grupos.</p>
+<div class="figure">
+<img src="/post/2018-10-05-analisis-de-variables-cuantitativas_files/algoritmo.png" alt="Algoritmo para escoger el test estadístico más adecuado cuando trabaja con variables numéricas." width="700" />
+<p class="caption">Algoritmo para escoger el test estadístico más adecuado cuando trabaja con variables numéricas.</p>
+</div>
+<p>Sin embargo, antes de hacer estas comparaciones necesitamos evaluar algunos aspectos de los datos, como su distribución, la cantidad de grupos o la dependencia de estos grupos. La figura 1 es el algoritmo para analizar datos cuantitativos, cuando éstos se separan en 2 o más grupos.</p>
+</div>
+<div id="distribucion-normal" class="section level1">
+<h1>Distribución normal</h1>
+<p>La distribución normal es la forma en que los datos se agrupan en la naturaleza, cuando han sido evaluados en forma aleatoria y, por lo tanto, representativa. Cuando los datos se ajustan a esta distribución, se le llama una muestra <strong>paramétrica</strong>.</p>
+<p>Es fundamental evaluar si nuestros datos se ajustan a esta distribución, ya que muchos test estadísticos requieren que la muestra sea paramétrica. En caso que no se ajusten, podemos elegir un test no paramétrico, o bien, normalizar los datos.</p>
+<p>Una forma sencilla de entender la distribución normal, es imaginar la estatura en una sala con 100 estudiantes. La mayoría de ellos tendrá una estatura promedio, por lo que podríamos agrupar una gran frecuencia de estudiantes que miden 1.70 m en el centro de la distribución. A medida que la estatura aumenta, la frecuencia de estudiantes va disminuyendo, de la misma forma que en las estaturas más bajas.</p>
+<p><img src="/post/2018-10-05-analisis-de-variables-cuantitativas_files/figure-html/unnamed-chunk-2-1.png" width="336" /></p>
+<p>En la figura 2, podemos observar que la distribución normal tiene algunas características que la definen:</p>
+<ul>
+<li>Una gran cantidad de datos agrupados al centro, y pocos en los extremos.</li>
+<li>La línea roja muestra el promedio (1.70 m), y coincide con la mediana. Ergo, su forma es simétrica.</li>
+<li>Debe tener un número mínimo para lograr su formarse, aproximadamente &gt; 15 observaciones.</li>
+</ul>
+<p>Para poder evaluar el ajuste de nuestros datos a la distribución normal, disponemos de muchas herramientas, por lo que nos centraremos en la visualización gráfica, el test de Shapiro Wilk, el test D’agostino Pearson Omnibus, y la representación gráfica de cuantil-cuantil.</p>
+<div id="shapiro-wilk" class="section level2">
+<h2>Shapiro Wilk</h2>
+<p>Para realizar este test, se calcula el promedio y la varianza de la muestra, y se ordenan todos los datos de menor a mayor. Luego, se compara la diferencia que existe entre el primero y el último, el segundo y el penúltimo. etc. De esta forma, análisis determina un estadístico W, que se extrapola a un p-value <span class="citation">Shapiro and Wilk (<a href="#ref-Shapiro:1965gf">1965</a>)</span>.</p>
+<p>La hipótesis nula es que los datos se ajustan a la distribución normal, por lo que podemos asumir la normalidad de nuestros datos con un p-value mayor que alfa (p &gt; 0.05).</p>
+</div>
+<div id="dagostino-pearson-omnibus" class="section level2">
+<h2>D’agostino Pearson Omnibus</h2>
+<p>El test de Shapiro Wilk es muy útil cuando el tamaño muestral es menor que 50, sin embargo, no es capaz de identificar la normalidad en muestras que superen este tamaño. Para resolver este problema, en el año 1971 se creó el test D’agostino Pearson Omnibus <span class="citation">D’Agostino (<a href="#ref-DAgostino:1971ia">1971</a>)</span>.</p>
+<p>Este test estima un estadístico D, que se calcula a partir de la asimetría de la muestra y su curtosis.</p>
+<p>Al igual que en Shapir-Wilk, el estadístico D se puede extrapolar a un p-value, que se interpreta de la misma forma (hipótesis nula es ajuste a la normalidad).</p>
+</div>
+<div id="grafico-cuantil-cuantil-q-q-plot" class="section level2">
+<h2>Gráfico cuantil-cuantil (Q-Q plot)</h2>
+<p>Finalmente, podemos evaluar la normalidad en forma visual con el Q-Q plot. Este gráfico compara los cuantiles de una muestra real con los cuantiles teóricos de una distribución de probabilidad.</p>
+<p>Si recordamos, un cuantil es una división en partes iguales de un set de datos. Por ejemplo, si tenemos 100 observaciones entre 1.6 m y 1.8 m, los cuantiles teóricos se formarán dividiendo en 100 partes iguales el rango 1.6-1.8, obteniendo 100 cuantiles de 0.2 m en el eje Y. Estos cuantiles teóricos se comparan con las 100 observaciones reales en nuestro set de datos, obteniendo una correlación (fig 3).</p>
+<pre class="r"><code>n &lt;- seq(.5,2,length=1000)
+x &lt;- rnorm(n,mean=1.7,sd=.075)
+df &lt;- data.frame(x)
+ggplot(df,aes(sample=x))+
+  stat_qq()+stat_qq_line(color=&#39;red&#39;)+
+  scale_y_continuous(name=&#39;Estatura (m)&#39;)+
+  scale_x_continuous(name=&#39;Teorico&#39;)+
+  labs(caption=&#39;Figura 3&#39;)</code></pre>
+<p><img src="/post/2018-10-05-analisis-de-variables-cuantitativas_files/figure-html/unnamed-chunk-3-1.png" width="336" /></p>
+<p>Si utilizamos R (recomendado), la función ‘qqpnorm()’ permite crear fácilmente este gráfico. En la figura 3, se han utilizado los mismos datos que en la figura 2, y se puede observar como las observaciones (puntos) se ajustan a la curva teórica (línea roja), lo que sugiere normalidad.</p>
+</div>
+</div>
+<div id="comparando-2-medias" class="section level1">
+<h1>Comparando 2 medias</h1>
+<p>Continuará—</p>
+<div id="t-test" class="section level2">
+<h2>t-test</h2>
+</div>
+<div id="u-mann-withney-y-wilcoxon" class="section level2">
+<h2>U Mann-Withney y Wilcoxon</h2>
+</div>
+</div>
+<div id="comparando-mas-de-2-medias" class="section level1">
+<h1>Comparando más de 2 medias</h1>
+<p>Si deseamos comparar más de 2 grupos, no podemos utilizar t-test o alguna de sus aproximaciones <em>no-paramétricas</em> repitiéndolo varias veces, ya que se pierde potencia estadística considerablemente por cada grupo extra.</p>
+<p>Es importante remarcar que los test presentados acá solo permiten identificar si un grupo es diferente al resto. si queremos saber cuál o cuáles grupos son diferentes, debemos realizar un análisis <em>post-hoc</em> posterior.</p>
+<div id="homogeneidad-de-las-varianzas" class="section level2">
+<h2>Homogeneidad de las varianzas</h2>
+<p>Si deseamos evaluar más de 2 grupos, y los datos tienen una distribución normal, podemos utilizar Anova. Anova es una abreviación de “Análisis de la Varianza”, por lo que uno de sus principales presuntos es que las varianzas entre los grupos debe ser homogénea. Para probar esto, podemos realizar el test de Levene.</p>
+</div>
+<div id="anova" class="section level2">
+<h2>Anova</h2>
+</div>
+<div id="kruskal-wallis" class="section level2">
+<h2>Kruskal-Wallis</h2>
+</div>
+<div id="two-way-anova" class="section level2">
+<h2>Two-way Anova</h2>
+</div>
+</div>
+<div id="referencias" class="section level1 unnumbered">
+<h1>Referencias</h1>
+<div id="refs" class="references">
+<div id="ref-DAgostino:1971ia">
+<p>D’Agostino, Ralph B. 1971. “An Omnibus Test of Normality for Moderate and Large Size Samples.” <em>Biometrika</em> 58 (2): 341–9.</p>
+</div>
+<div id="ref-Shapiro:1965gf">
+<p>Shapiro, S S, and M B Wilk. 1965. “An Analysis of Variance Test for Normality (Complete Samples).” <em>Biometrika</em> 52 (3/4): 591–22.</p>
+</div>
+</div>
+</div>
+
+    </div>
+  </article>
+
+  
+
+
+</main>
+
+      <footer class="footer">
+        <ul class="footer-links">
+          <li> 
+            <a href="https://www.twitter.com/diegohalabi" class="footer-links-kudos"> <img src="/images/twitter.svg" alt="Twitter" width="16" height="16"></a>
+            <a href="https://www.github.com/diegohalabi" class="footer-links-kudos"> <img src="/images/github.svg" alt="Github" width="16" height="16" ></a>
+            <a href="https://www.researchgate.net/profile/Diego_Halabi" class="footer-links-kudos"> <img src="/images/rg.png" alt="Researchgate" width="16" height="16"></a>
+            <a href="mailto:diego.halabi@uach.cl" class="footer-links-kudos"> <img src="/images/mail.svg" alt="E-mail" width="16" height="16"></a>
+          </li>
+          <br>
+          <font size="2">Devloped by Diego Halabi</font>
+          <br>
+          <font size="2">© Text and Code<a href="https://www.gnu.org/licenses/gpl-3.0.html">GPL v3</a>unless otherwise specified.</font>
+        </ul>
+      </footer>
+
+    </div>
+    
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/r.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+
+    
+  </body>
+</html>
+

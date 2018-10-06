@@ -6,10 +6,20 @@
     <description>Recent content in Posts on Diego Halabi</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 05 Oct 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 06 Oct 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>[Spanish] Análisis de variables cuantitativas</title>
+      <link>/2018/10/06/analisis-de-variables-cuantitativas/</link>
+      <pubDate>Sat, 06 Oct 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/2018/10/06/analisis-de-variables-cuantitativas/</guid>
+      <description>Introducción Una de las situaciones más comunes en investigación de ciencias médicas, es medir una variable numérica que se separa entre 2 o más grupos. Por ejemplo, en una investigación podría comparar cómo mejora la presión arterial entre pacientes sometidos a 2 tratamientos diferentes, o evaluar la producción una proteína en células expuestas a distintas dosis de un fármaco.
+En estos casos, nos interesa saber si el promedio y/o la dispersión de la variable es diferente entre los grupos.</description>
+    </item>
     
     <item>
       <title>A simple algorithm to analize numerical variables</title>
