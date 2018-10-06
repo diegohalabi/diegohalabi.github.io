@@ -19,6 +19,11 @@
 
 
 
+
+<link href='//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
 <link rel="stylesheet" href="/css/fonts.css" media="all">
 <link rel="stylesheet" href="/css/main.css" media="all">
 
@@ -64,22 +69,15 @@
     
 
     <div class="article-content">
-      <div id="TOC">
-true
-</div>
-
-<div id="introduccion" class="section level1">
-<h1>1. Introducción</h1>
-<p>Una de las situaciones más comunes en investigación de ciencias médicas, es medir una variable numérica que se separa entre 2 o más grupos. Por ejemplo, en una investigación podría comparar cómo mejora la presión arterial entre pacientes sometidos a 2 tratamientos diferentes, o evaluar la producción una proteína en células expuestas a distintas dosis de un fármaco.</p>
+      <p>Una de las situaciones más comunes en investigación de ciencias médicas, es medir una variable numérica que se separa entre 2 o más grupos. Por ejemplo, en una investigación podría comparar cómo mejora la presión arterial entre pacientes sometidos a 2 tratamientos diferentes, o evaluar la producción una proteína en células expuestas a distintas dosis de un fármaco.</p>
 <p>En estos casos, nos interesa saber si el promedio y/o la dispersión de la variable es diferente entre los grupos.</p>
 <div class="figure">
 <img src="/post/2018-10-05-analisis-de-variables-cuantitativas_files/algoritmo.png" alt="Figura 1. Algoritmo para escoger el test estadístico más adecuado cuando trabaja con variables numéricas." width="700" />
 <p class="caption">Figura 1. Algoritmo para escoger el test estadístico más adecuado cuando trabaja con variables numéricas.</p>
 </div>
 <p>Sin embargo, antes de hacer estas comparaciones necesitamos evaluar algunos aspectos de los datos, como su distribución, la cantidad de grupos o la dependencia de estos grupos. La figura 1 es el algoritmo para analizar datos cuantitativos, cuando éstos se separan en 2 o más grupos.</p>
-</div>
 <div id="distribucion-normal" class="section level1">
-<h1>2. Distribución normal</h1>
+<h1>1. Distribución normal</h1>
 <p>La distribución normal es la forma en que los datos se agrupan en la naturaleza, cuando han sido evaluados en forma aleatoria y, por lo tanto, representativa. Cuando los datos se ajustan a esta distribución, se le llama una muestra <strong>paramétrica</strong>.</p>
 <p>Es fundamental evaluar si nuestros datos se ajustan a esta distribución, ya que muchos test estadísticos requieren que la muestra sea paramétrica. En caso que no se ajusten, podemos elegir un test no paramétrico, o bien, normalizar los datos.</p>
 <p>Una forma sencilla de entender la distribución normal, es imaginar la estatura en una sala con 100 estudiantes. La mayoría de ellos tendrá una estatura promedio, por lo que podríamos agrupar una gran frecuencia de estudiantes que miden 1.70 m en el centro de la distribución. A medida que la estatura aumenta, la frecuencia de estudiantes va disminuyendo, de la misma forma que en las estaturas más bajas.</p>
@@ -91,55 +89,57 @@ true
 <li>Debe tener un número mínimo para lograr su formarse, aproximadamente &gt; 15 observaciones.</li>
 </ul>
 <p>Para poder evaluar el ajuste de nuestros datos a la distribución normal, disponemos de muchas herramientas, por lo que nos centraremos en la visualización gráfica, el test de Shapiro Wilk, el test D’agostino Pearson Omnibus, y la representación gráfica de cuantil-cuantil.</p>
-<div id="shapiro-wilk" class="section level2">
-<h2>2.1. Shapiro Wilk</h2>
+<div id="shapiro-wilk" class="section level3">
+<h3>1.1. Shapiro Wilk</h3>
 <p>Para realizar este test, se calcula el promedio y la varianza de la muestra, y se ordenan todos los datos de menor a mayor. Luego, se compara la diferencia que existe entre el primero y el último, el segundo y el penúltimo. etc. De esta forma, análisis determina un estadístico W, que se extrapola a un p-value (<span class="citation">Shapiro and Wilk (<a href="#ref-Shapiro:1965gf">1965</a>)</span>).</p>
 <p>La hipótesis nula es que los datos se ajustan a la distribución normal, por lo que podemos asumir la normalidad de nuestros datos con un p-value mayor que alfa (p &gt; 0.05).</p>
 </div>
-<div id="dagostino-pearson-omnibus" class="section level2">
-<h2>2.2. D’agostino Pearson Omnibus</h2>
+<div id="dagostino-pearson-omnibus" class="section level3">
+<h3>1.2. D’agostino Pearson Omnibus</h3>
 <p>El test de Shapiro Wilk es muy útil cuando el tamaño muestral es menor que 50, sin embargo, no es capaz de identificar la normalidad en muestras que superen este tamaño. Para resolver este problema, en el año 1971 se creó el test D’agostino Pearson Omnibus <span class="citation">D’Agostino (<a href="#ref-DAgostino:1971ia">1971</a>)</span>.</p>
 <p>Este test estima un estadístico D, que se calcula a partir de la asimetría de la muestra y su curtosis.</p>
 <p>Al igual que en Shapir-Wilk, el estadístico D se puede extrapolar a un p-value, que se interpreta de la misma forma (hipótesis nula es ajuste a la normalidad).</p>
 </div>
-<div id="grafico-cuantil-cuantil-q-q-plot" class="section level2">
-<h2>2.3. Gráfico cuantil-cuantil (Q-Q plot)</h2>
+<div id="grafico-cuantil-cuantil-q-q-plot" class="section level3">
+<h3>1.3. Gráfico cuantil-cuantil (Q-Q plot)</h3>
 <p>Finalmente, podemos evaluar la normalidad en forma visual con el Q-Q plot. Este gráfico compara los cuantiles de una muestra real con los cuantiles teóricos de una distribución de probabilidad.</p>
-<p>Si recordamos, un cuantil es una división en partes iguales de un set de datos. Por ejemplo, si tenemos 100 observaciones entre 1.6 m y 1.8 m, los cuantiles teóricos se formarán dividiendo en 100 partes iguales el rango 1.6-1.8, obteniendo 100 cuantiles de 0.2 m en el eje Y. Estos cuantiles teóricos se comparan con las 100 observaciones reales en nuestro set de datos, obteniendo una correlación (fig 3).</p>
+<p>Si recordamos, un cuantil es una división en partes iguales de un set de datos. Por ejemplo, si tenemos 100 observaciones entre 1.6 m y 1.8 m, los cuantiles teóricos se formarán dividiendo en 100 partes iguales el rango 1.6 - 1.8, obteniendo 100 cuantiles de 0.2 m en el eje Y. Estos cuantiles teóricos se comparan con las 100 observaciones reales en nuestro set de datos, obteniendo una correlación (fig 3).</p>
 <p><img src="/post/2018-10-05-analisis-de-variables-cuantitativas_files/figure-html/unnamed-chunk-3-1.png" width="336" /></p>
-<p>Si utilizamos R (recomendado), la función ‘qqpnorm()’ permite crear fácilmente este gráfico. En la figura 3, se han utilizado los mismos datos que en la figura 2, y se puede observar como las observaciones (puntos) se ajustan a la curva teórica (línea roja), lo que sugiere normalidad.</p>
+<p>Si utilizamos R (recomendado), la función ‘qqpnorm()’ permite crear fácilmente este gráfico. En la figura 3, se han utilizado los mismos datos que en la figura 2, y se visualiza directamente como las observaciones (puntos) se ajustan a la curva teórica (línea roja), lo que sugiere normalidad.</p>
 </div>
 </div>
 <div id="comparando-2-medias" class="section level1">
-<h1>3. Comparando 2 medias</h1>
+<h1>2. Comparando 2 medias</h1>
 <p>Una situación muy común en investigación, es medir una variable numérica separada en 2 grupos. Entonces, la estadística nos ayudará a responder si las diferencias que observamos en el promedio (o mediana) se deben al azar, o bien, si podemos extrapolarlas a la población.</p>
 <p>En el ejemplo de la figura 4, se observan los resultados en la producción de insluina de cultivos de hepatocitos, que provienen de ratones hipertensos y controles (2 grupos).</p>
+<pre><code>## Warning: Removed 1 rows containing non-finite values (stat_boxplot).</code></pre>
 <p><img src="/post/2018-10-05-analisis-de-variables-cuantitativas_files/figure-html/unnamed-chunk-4-1.png" width="288" /></p>
 <p>¿Producen más insluina los ratones controles? ¿Es significativa esa diferencia?</p>
-<div id="t-test" class="section level2">
-<h2>3.1. t-test</h2>
+<div id="t-test" class="section level3">
+<h3>2.1. t-test</h3>
 </div>
-<div id="u-mann-withney-y-wilcoxon" class="section level2">
-<h2>3.2. U Mann-Withney y Wilcoxon</h2>
+<div id="u-mann-withney-y-wilcoxon" class="section level3">
+<h3>2.2. U Mann-Withney y Wilcoxon</h3>
 </div>
 </div>
 <div id="comparando-mas-de-2-medias" class="section level1">
-<h1>4. Comparando más de 2 medias</h1>
+<h1>3. Comparando más de 2 medias</h1>
 <p>Si deseamos comparar más de 2 grupos, no podemos utilizar t-test o alguna de sus aproximaciones <em>no-paramétricas</em> repitiéndolo varias veces, ya que se pierde potencia estadística considerablemente por cada grupo extra.</p>
 <p>Es importante remarcar que los test presentados acá solo permiten identificar si un grupo es diferente al resto. si queremos saber cuál o cuáles grupos son diferentes, debemos realizar un análisis <em>post-hoc</em> posterior.</p>
+<pre><code>## Warning: Removed 3 rows containing non-finite values (stat_boxplot).</code></pre>
 <p><img src="/post/2018-10-05-analisis-de-variables-cuantitativas_files/figure-html/unnamed-chunk-5-1.png" width="336" /></p>
-<div id="homogeneidad-de-las-varianzas" class="section level2">
-<h2>4.1. Homogeneidad de las varianzas</h2>
+<div id="homogeneidad-de-las-varianzas" class="section level3">
+<h3>3.1. Homogeneidad de las varianzas</h3>
 <p>Si deseamos evaluar más de 2 grupos, y los datos tienen una distribución normal, podemos utilizar Anova. Anova es una abreviación de “Análisis de la Varianza”, por lo que uno de sus principales presuntos es que las varianzas entre los grupos debe ser homogénea. Para probar esto, podemos realizar el test de Levene.</p>
 </div>
-<div id="anova" class="section level2">
-<h2>4.2. Anova</h2>
+<div id="anova" class="section level3">
+<h3>3.2. Anova</h3>
 </div>
-<div id="kruskal-wallis" class="section level2">
-<h2>4.3. Kruskal-Wallis</h2>
+<div id="kruskal-wallis" class="section level3">
+<h3>3.3. Kruskal-Wallis</h3>
 </div>
-<div id="two-way-anova" class="section level2">
-<h2>4.4. Two-way Anova</h2>
+<div id="two-way-anova" class="section level3">
+<h3>3.4. Two-way Anova</h3>
 </div>
 </div>
 <div id="referencias" class="section level1 unnumbered">
@@ -179,6 +179,18 @@ true
 
     </div>
     
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/r.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
 
     
 
