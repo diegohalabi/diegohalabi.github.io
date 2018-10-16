@@ -13,10 +13,10 @@
     
     <item>
       <title>Quick plots with ggplot2</title>
-      <link>/2018/10/16/quick-plots/</link>
+      <link>/2018/10/16/quick-plots-with-ggplot2/</link>
       <pubDate>Tue, 16 Oct 2018 00:00:00 +0000</pubDate>
       
-      <guid>/2018/10/16/quick-plots/</guid>
+      <guid>/2018/10/16/quick-plots-with-ggplot2/</guid>
       <description>Few days ago, I had to quickly create 2 plots to ask some questions in a PhD quiz. This is the code.
 Required Load required packages (tidyverse and cowplot):
 library(tidyverse) library(cowplot)  Data Make some random data:
