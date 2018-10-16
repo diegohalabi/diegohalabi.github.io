@@ -1,0 +1,155 @@
+---
+title: '[Spanish] Análisis de variables numéricas'
+author: ''
+date: '2018-10-06'
+slug: analisis-de-variables-cuantitativas
+bibliography: ['2018-10-05-analisis-de-variables-cuantitativas_files/mybib.bib']
+csl: ['https://www.zotero.org/styles/vancouver']
+link-citations: yes
+categories:
+  - Spanish
+  - Statistics
+tags:
+  - Statistics
+  - R
+---
+
+Una de las situaciones más comunes en investigación de ciencias médicas, es medir una variable numérica que se separa entre 2 o más grupos. Por ejemplo, en una investigación podría comparar cómo mejora la presión arterial entre pacientes sometidos a 2 tratamientos diferentes, o evaluar la producción una proteína en células expuestas a distintas dosis de un fármaco.
+
+En estos casos, nos interesa saber si el promedio y/o la dispersión de la variable es diferente entre los grupos.
+
+![Figura 1. Algoritmo para escoger el test estadístico más adecuado cuando trabaja con variables numéricas.](/post/2018-10-05-analisis-de-variables-cuantitativas_files/algoritmo.png){width=700px}
+
+Sin embargo, antes de hacer estas comparaciones necesitamos evaluar algunos aspectos de los datos, como su distribución, la cantidad de grupos o la dependencia de estos grupos. La figura 1 es el algoritmo para analizar datos cuantitativos, cuando éstos se separan en 2 o más grupos.
+
+# 1. Distribución normal
+
+La distribución normal es la forma en que los datos se agrupan en la naturaleza, cuando han sido evaluados en forma aleatoria y, por lo tanto, representativa. Cuando los datos se ajustan a esta distribución, se le llama una muestra **paramétrica**.
+
+Es fundamental evaluar si nuestros datos se ajustan a esta distribución, ya que muchos test estadísticos requieren que la muestra sea paramétrica. En caso que no se ajusten, podemos elegir un test no paramétrico, o bien, normalizar los datos.
+
+Una forma sencilla de entender la distribución normal, es imaginar la estatura en una sala con 100 estudiantes. La mayoría de ellos tendrá una estatura promedio, por lo que podríamos agrupar una gran frecuencia de estudiantes que miden 1.70 m en el centro de la distribución. A medida que la estatura aumenta, la frecuencia de estudiantes va disminuyendo, de la misma forma que en las estaturas más bajas.
+
+```{r include=FALSE}
+library(tidyverse)
+```
+```{r echo=FALSE, fig.height=2.5, fig.width=3.5, warning=FALSE}
+df <- data.frame(
+  x <- rnorm(100000,mean=1.7,sd=.075)
+  )
+ggplot(df,aes(x=x))+
+  geom_histogram(binwidth=.03)+
+  scale_x_continuous(name='Estatura (m)',
+                     limits=c(1.4,2))+
+  scale_y_continuous(name='Frecuencia (n)',breaks=c(5000,10000,15000),labels=c('5','10','15'))+
+  geom_vline(xintercept=1.7,
+             color='red',
+             linetype=2)+
+  labs(caption='Figura 2. Distribucion Normal')
+```
+
+En la figura 2, podemos observar que la distribución normal tiene algunas características que la definen:
+
+1. Una gran cantidad de datos agrupados al centro, y pocos en los extremos.
+2. La línea roja muestra el promedio (1.70 m), y coincide con la mediana. Ergo, su forma es simétrica.
+3. Debe tener un número mínimo para lograr su formarse, aproximadamente > 15 observaciones.
+
+Para poder evaluar el ajuste de nuestros datos a la distribución normal, disponemos de muchas herramientas, por lo que nos centraremos en la visualización gráfica, el test de Shapiro Wilk, el test D'agostino Pearson Omnibus, y la representación gráfica de cuantil-cuantil.
+
+### 1.1. Shapiro Wilk
+
+Para realizar este test, se calcula el promedio y la varianza de la muestra, y se ordenan todos los datos de menor a mayor. Luego, se compara la diferencia que existe entre el primero y el último, el segundo y el penúltimo. etc. De esta forma, análisis determina un estadístico W, que se extrapola a un p-value (@Shapiro:1965gf).
+
+La hipótesis nula es que los datos se ajustan a la distribución normal, por lo que podemos asumir la normalidad de nuestros datos con un p-value mayor que alfa (p > 0.05).
+
+
+### 1.2. D'agostino Pearson Omnibus
+
+El test de Shapiro Wilk es muy útil cuando el tamaño muestral es menor que 50, sin embargo, no es capaz de identificar la normalidad en muestras que superen este tamaño. Para resolver este problema, en el año 1971 se creó el test D'agostino Pearson Omnibus @DAgostino:1971ia.
+
+Este test estima un estadístico D, que se calcula a partir de la asimetría de la muestra y su curtosis.
+
+Al igual que en Shapir-Wilk, el estadístico D se puede extrapolar a un p-value, que se interpreta de la misma forma (hipótesis nula es ajuste a la normalidad).
+
+### 1.3. Gráfico cuantil-cuantil (Q-Q plot)
+
+Finalmente, podemos evaluar la normalidad en forma visual con el Q-Q plot. Este gráfico compara los cuantiles de una muestra real con los cuantiles teóricos de una distribución de probabilidad.
+
+Si recordamos, un cuantil es una división en partes iguales de un set de datos. Por ejemplo, si tenemos 100 observaciones entre 1.6 m y 1.8 m, los cuantiles teóricos se formarán dividiendo en 100 partes iguales el rango 1.6 - 1.8, obteniendo 100 cuantiles de 0.2 m en el eje Y. Estos cuantiles teóricos se comparan con las 100 observaciones reales en nuestro set de datos, obteniendo una correlación (fig 3).
+
+
+
+```{r echo=FALSE, fig.height=3, fig.width=3.5, warning=FALSE}
+n <- seq(.5,2,length=1000)
+x <- rnorm(n,mean=1.7,sd=.075)
+df <- data.frame(x)
+ggplot(df,aes(sample=x))+
+  stat_qq()+stat_qq_line(color='red')+
+  scale_y_continuous(name='Estatura (m)')+
+  scale_x_continuous(name='Teorico')+
+  labs(caption='Figura 3. Grafico Cuantil-Cuantil (Q-Q plot)')
+```
+
+
+Si utilizamos R (recomendado), la función 'qqpnorm()' permite crear fácilmente este gráfico. En la figura 3, se han utilizado los mismos datos que en la figura 2, y se visualiza directamente como las observaciones (puntos) se ajustan a la curva teórica (línea roja), lo que sugiere normalidad.
+
+# 2. Comparando 2 medias
+
+Una situación muy común en investigación, es medir una variable numérica separada en 2 grupos. Entonces, la estadística nos ayudará a responder si las diferencias que observamos en el promedio (o mediana) se deben al azar, o bien, si podemos extrapolarlas a la población.
+
+En el ejemplo de la figura 4, se observan los resultados en la producción de insluina de cultivos de hepatocitos, que provienen de ratones hipertensos y controles (2 grupos).
+
+```{r echo=FALSE, fig.height=3, fig.width=3, warning=FALSE}
+h <- rnorm(50,mean=10,sd=4)
+nh <- rnorm(50,mean=13,sd=4)
+insulina <- c(h,nh)
+grupo <- gl(2,50,labels=c("HTA","Control"))
+df <- data.frame(cbind(insulina,as.factor(grupo)))
+ggplot(df,aes(y=insulina,x=grupo))+
+  geom_boxplot(outlier.shape=NA)+
+  scale_y_continuous(name='Insulina (ng/dl)',breaks=seq(0,22,5),limits=c(0,22))+
+  scale_x_discrete(name='Grupo')+
+  labs(caption='Figura 4. Comparando una variable entre 2 grupos.')
+```
+
+¿Producen más insluina los ratones controles? ¿Es significativa esa diferencia?
+
+### 2.1. t-test
+
+Compara el promedio y las desviaciones estándar de 2 grupos. Puede ser dependiente o independiente.
+
+Requiere que la muestra sea paramétrica (distribución normal).
+
+### 2.2. U Mann-Withney y Wilcoxon
+
+# 3. Comparando más de 2 medias
+
+Si deseamos comparar más de 2 grupos, no podemos utilizar t-test o alguna de sus aproximaciones *no-paramétricas* repitiéndolo varias veces, ya que se pierde potencia estadística considerablemente por cada grupo extra.
+
+Es importante mencionar que los test presentados a continuación solo permiten identificar si un grupo es diferente al resto. Si queremos saber cuál o cuáles grupos son diferentes, debemos realizar un análisis *post-hoc* posterior, que también serán abordados.
+
+```{r echo=FALSE, fig.height=3, fig.width=3.5, warning=FALSE}
+h <- rnorm(50,mean=10,sd=4)
+nh <- rnorm(50,mean=13,sd=4)
+t <- rnorm(50,mean=13,sd=4)
+insulina <- c(h,nh,t)
+grupo <- gl(3,50,labels=c('HTA','Control','Tratados'))
+df <- data.frame(cbind(insulina,as.factor(grupo)))
+ggplot(df,aes(y=insulina,x=grupo))+
+  geom_boxplot(outlier.shape=NA)+
+  scale_y_continuous(name='Insulina (ng/dl)',breaks=seq(0,22,5),limits=c(0,22))+
+  scale_x_discrete(name='Grupo')+
+  labs(caption='Figura 5. Comparando una variable cuantitativa entre 3 grupos.')
+```
+
+### 3.1. Homogeneidad de las varianzas
+
+Si deseamos evaluar más de 2 grupos, y los datos tienen una distribución normal, podemos utilizar Anova. Anova es una abreviación de "Análisis de la Varianza", por lo que uno de sus principales presuntos es que las varianzas entre los grupos debe ser homogénea. Para probar esto, podemos realizar el test de Levene.
+
+### 3.2. Anova
+
+### 3.3. Kruskal-Wallis
+
+### 3.4. Two-way Anova
+
+# 5. Referencias

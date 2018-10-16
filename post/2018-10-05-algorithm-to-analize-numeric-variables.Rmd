@@ -1,0 +1,14 @@
+---
+title: A simple algorithm to analize numerical variables
+author: Diego Halabi
+date: '2018-10-05'
+slug: algorithm-to-analize-numerical-variables
+categories: []
+tags:
+  - Statistics
+  - R
+---
+
+I created this simple algorithm to perform basic analysis of numerical data.
+
+![](/post/2018-10-05-algorithm-to-analize-numeric-variables_files/algorithm2.png){width=700px}
