@@ -6,8 +6,8 @@
 <meta name="generator" content="Hugo 0.49" />
 
 
-<title>Quick plots - Diego Halabi</title>
-<meta property="og:title" content="Quick plots - Diego Halabi">
+<title>Quick plots with ggplot2 - Diego Halabi</title>
+<meta property="og:title" content="Quick plots with ggplot2 - Diego Halabi">
 
 
 
@@ -59,35 +59,22 @@
 
   <article class="article">
     
-    <span class="article-duration">2 min read</span>
+    <span class="article-duration">1 min read</span>
     
 
-    <h1 class="article-title">Quick plots</h1>
+    <h1 class="article-title">Quick plots with ggplot2</h1>
 
     
     <span class="article-date">2018/10/16</span>
     
 
     <div class="article-content">
-      <p>Few days ago, I had to quickly create 2 plots for a PhD quiz. This is the code.</p>
+      <p>Few days ago, I had to quickly create 2 plots to ask some questions in a PhD quiz. This is the code.</p>
 <div id="required" class="section level1">
 <h1>Required</h1>
-<p>Load required packages (‘Tidiverse’ and ‘cowplot’):</p>
-<pre class="r"><code>library(tidyverse)</code></pre>
-<pre><code>## -- Attaching packages --------------------------------------- tidyverse 1.2.1 --</code></pre>
-<pre><code>## v ggplot2 3.0.0     v purrr   0.2.5
-## v tibble  1.4.2     v dplyr   0.7.6
-## v tidyr   0.8.1     v stringr 1.3.1
-## v readr   1.1.1     v forcats 0.3.0</code></pre>
-<pre><code>## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
-## x dplyr::filter() masks stats::filter()
-## x dplyr::lag()    masks stats::lag()</code></pre>
-<pre class="r"><code>library(cowplot)</code></pre>
-<pre><code>## 
-## Attaching package: &#39;cowplot&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:ggplot2&#39;:
-## 
-##     ggsave</code></pre>
+<p>Load required packages (<code>tidyverse</code> and <code>cowplot</code>):</p>
+<pre class="r"><code>library(tidyverse)
+library(cowplot)</code></pre>
 </div>
 <div id="data" class="section level1">
 <h1>Data</h1>
@@ -102,29 +89,43 @@ raw &lt;- data.frame(
   )
 df &lt;- raw %&gt;%
   gather(Group,Proliferation,1:4)</code></pre>
-<p>Ok, we have a proliferation vector measured as fluorescence of some surface protein marker, separated into 4 groups: ‘Control’, ‘Melatonin 0.1 nM’, ‘Melatonin 1 nM’ and, ‘Melatonin 10 nM’.</p>
+<p>Ok, we have a proliferation vector measured as fluorescence of some surface protein marker, separated into 4 groups: <code>Control</code>, <code>Melatonin 0.1 nM</code>, <code>Melatonin 1 nM</code> and, <code>Melatonin 10 nM</code>.</p>
 <pre class="r"><code># Reorder groups by ascendent concentration of melatonin, and label
-df$Group &lt;- factor(df$Group,
-                   levels=c(&quot;ctrl&quot;, &quot;mela&quot;, &quot;melb&quot;, &quot;melc&quot;),
-                   labels=c(&quot;Control&quot;, &quot;Mel 0.1nM&quot;, &quot;Mel 1nM&quot;, &quot;Mel 10nM&quot;))</code></pre>
+df$Group &lt;- factor(
+  df$Group,
+  levels=c(&#39;ctrl&#39;,&#39;mela&#39;,&#39;melb&#39;,&#39;melc&#39;),
+  labels=c(&#39;Control&#39;,&#39;Mel 0.1nM&#39;,&#39;Mel 1nM&#39;,&#39;Mel 10nM&#39;)
+  )</code></pre>
 </div>
 <div id="plot" class="section level1">
 <h1>Plot</h1>
-<p>Let’s plot</p>
+<p>Let’s plot:</p>
 <pre class="r"><code># Make a Box plot
-boxplot &lt;- ggplot(df,aes(x=factor(Group),y=Proliferation))+geom_boxplot()+
-  scale_x_discrete(name=&#39;Group (dose)&#39;)+scale_y_continuous(name=&#39;Proliferation marker&#39;)+theme_light()
-# Summarize
+boxplot &lt;- ggplot(df,aes(x=Group,
+                         y=Proliferation)
+                  )+
+  geom_boxplot()+
+  scale_x_discrete(name=&#39;Group (dose)&#39;)+
+  scale_y_continuous(name=&#39;Proliferation marker&#39;)+
+  theme_light()
+# Summarize (needed for the barplot)
 bars &lt;- df %&gt;%
   group_by(Group) %&gt;%
-  summarize(proliferation=mean(Proliferation),sd=sd(Proliferation))
-# Make a bar plot with summary
-barplot &lt;- ggplot(bars,aes(x=factor(Group),y=proliferation))+
+  summarize(proliferation=mean(Proliferation),
+            sd=sd(Proliferation)
+            )
+# Make a bar plot with mean and standard deviation bars
+barplot &lt;- ggplot(bars,aes(x=Group,
+                           y=proliferation)
+                  )+
   stat_summary(fun.y=&quot;mean&quot;,geom=&quot;bar&quot;,color=&#39;black&#39;)+
-   geom_errorbar(aes(ymin=proliferation,ymax=proliferation+sd),width=.2)+
-  theme_light()+
+  geom_errorbar(width=.2,aes(ymin=proliferation,
+                    ymax=proliferation+sd))+
   scale_x_discrete(name=&#39;Group (dose)&#39;)+
-  scale_y_continuous(name=&#39;Proliferation marker&#39;,expand=c(0,0),limits=c(0,4.5))
+  scale_y_continuous(name=&#39;Proliferation marker&#39;,
+                     expand=c(0,0),limits=c(0,4.5)
+                     )+
+  theme_light()
 # Print layout
 ggdraw()+
   draw_plot(boxplot, 0, 0, .5, 1)+
