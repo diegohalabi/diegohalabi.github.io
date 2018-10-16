@@ -20,7 +20,8 @@
       <description>Few days ago, I had to quickly create 2 plots to ask some questions in a PhD quiz. This is the code.
 Required Load required packages (tidyverse and cowplot):
 library(tidyverse) library(cowplot)  Data Make some random data:
-# 4 vectors that will be 4 groups. raw &amp;lt;- data.frame( ctrl = rnorm(15,mean=2,sd=.7), mela = rnorm(15,mean=2.8,sd=.7), melb = rnorm(15,mean=3.2,sd=.7), melc = rnorm(15,mean=3.4,sd=.7), Group = c(&amp;#39;treatment&amp;#39;) ) df &amp;lt;- raw %&amp;gt;% gather(Group,Proliferation,1:4) Ok, we have a proliferation vector measured as fluorescence of some surface protein marker, separated into 4 groups: Control, Melatonin 0.</description>
+# 5 vectors that will be 4 groups: raw &amp;lt;- data.frame( ctrl = rnorm(15,mean=2,sd=.7), mela = rnorm(15,mean=2.8,sd=.7), melb = rnorm(15,mean=3.2,sd=.7), melc = rnorm(15,mean=3.4,sd=.7), Group = c(&amp;#39;treatment&amp;#39;) ) Gather columns into rows:
+df &amp;lt;- raw %&amp;gt;% gather(Group,Proliferation,1:4) Reorder groups by ascendent concentration of melatonin, and label:</description>
     </item>
     
     <item>

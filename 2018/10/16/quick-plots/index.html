@@ -59,7 +59,7 @@
 
   <article class="article">
     
-    <span class="article-duration">1 min read</span>
+    <span class="article-duration">2 min read</span>
     
 
     <h1 class="article-title">Quick plots with ggplot2</h1>
@@ -79,58 +79,64 @@ library(cowplot)</code></pre>
 <div id="data" class="section level1">
 <h1>Data</h1>
 <p>Make some random data:</p>
-<pre class="r"><code># 4 vectors that will be 4 groups.
+<pre class="r"><code># 5 vectors that will be 4 groups:
 raw &lt;- data.frame(
   ctrl = rnorm(15,mean=2,sd=.7),
   mela = rnorm(15,mean=2.8,sd=.7),
   melb = rnorm(15,mean=3.2,sd=.7),
   melc = rnorm(15,mean=3.4,sd=.7),
   Group = c(&#39;treatment&#39;)
-  )
-df &lt;- raw %&gt;%
+  )</code></pre>
+<p>Gather columns into rows:</p>
+<pre class="r"><code>df &lt;- raw %&gt;%
   gather(Group,Proliferation,1:4)</code></pre>
-<p>Ok, we have a proliferation vector measured as fluorescence of some surface protein marker, separated into 4 groups: <code>Control</code>, <code>Melatonin 0.1 nM</code>, <code>Melatonin 1 nM</code> and, <code>Melatonin 10 nM</code>.</p>
-<pre class="r"><code># Reorder groups by ascendent concentration of melatonin, and label
-df$Group &lt;- factor(
+<p>Reorder groups by ascendent concentration of melatonin, and label:</p>
+<pre class="r"><code>df$Group &lt;- factor(
   df$Group,
   levels=c(&#39;ctrl&#39;,&#39;mela&#39;,&#39;melb&#39;,&#39;melc&#39;),
   labels=c(&#39;Control&#39;,&#39;Mel 0.1nM&#39;,&#39;Mel 1nM&#39;,&#39;Mel 10nM&#39;)
-  )</code></pre>
+  )
+str(df)</code></pre>
+<pre><code>## &#39;data.frame&#39;:    60 obs. of  2 variables:
+##  $ Group        : Factor w/ 4 levels &quot;Control&quot;,&quot;Mel 0.1nM&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ Proliferation: num  0.472 2.013 1.831 1.833 2.375 ...</code></pre>
+<p>Ok, we have a proliferation vector measured as fluorescence of some surface protein marker, separated into 4 groups: <code>Control</code>, <code>Melatonin 0.1 nM</code>, <code>Melatonin 1 nM</code> and, <code>Melatonin 10 nM</code>.</p>
 </div>
 <div id="plot" class="section level1">
 <h1>Plot</h1>
-<p>Let’s plot:</p>
-<pre class="r"><code># Make a Box plot
-boxplot &lt;- ggplot(df,aes(x=Group,
+<p>Let’s plot!</p>
+<p>Make a Box plot:</p>
+<pre class="r"><code>boxplot &lt;- ggplot(df,aes(x=Group,
                          y=Proliferation)
                   )+
   geom_boxplot()+
   scale_x_discrete(name=&#39;Group (dose)&#39;)+
   scale_y_continuous(name=&#39;Proliferation marker&#39;)+
-  theme_light()
-# Summarize (needed for the barplot)
+  theme_light()</code></pre>
+<p>Make a bar plot, with mean and standard deviation bars:</p>
+<pre class="r"><code># Summarize (needed for the barplot)
 bars &lt;- df %&gt;%
   group_by(Group) %&gt;%
   summarize(proliferation=mean(Proliferation),
             sd=sd(Proliferation)
             )
-# Make a bar plot with mean and standard deviation bars
+# Plot
 barplot &lt;- ggplot(bars,aes(x=Group,
                            y=proliferation)
                   )+
-  stat_summary(fun.y=&quot;mean&quot;,geom=&quot;bar&quot;,color=&#39;black&#39;)+
+  stat_summary(fun.y=&#39;mean&#39;,geom=&#39;bar&#39;,color=&#39;black&#39;)+
   geom_errorbar(width=.2,aes(ymin=proliferation,
                     ymax=proliferation+sd))+
   scale_x_discrete(name=&#39;Group (dose)&#39;)+
   scale_y_continuous(name=&#39;Proliferation marker&#39;,
                      expand=c(0,0),limits=c(0,4.5)
                      )+
-  theme_light()
-# Print layout
-ggdraw()+
+  theme_light()</code></pre>
+<p>Print layout:</p>
+<pre class="r"><code>ggdraw()+
   draw_plot(boxplot, 0, 0, .5, 1)+
   draw_plot(barplot, .5, 0, .5, 1)</code></pre>
-<p><img src="/post/2018-10-16-quick-plots_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p><img src="/post/2018-10-16-quick-plots_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 </div>
 
     </div>
