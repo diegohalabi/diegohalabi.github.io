@@ -6,10 +6,21 @@
     <description>Recent content on Diego Halabi</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 06 Oct 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 16 Oct 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Quick plots</title>
+      <link>/2018/10/16/quick-plots/</link>
+      <pubDate>Tue, 16 Oct 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/2018/10/16/quick-plots/</guid>
+      <description>Few days ago, I had to quickly create 2 plots for a PhD quiz. This is the code.
+Required Load required packages (‘Tidiverse’ and ‘cowplot’):
+library(tidyverse) ## -- Attaching packages --------------------------------------- tidyverse 1.2.1 -- ## v ggplot2 3.0.0 v purrr 0.2.5 ## v tibble 1.4.2 v dplyr 0.7.6 ## v tidyr 0.8.1 v stringr 1.3.1 ## v readr 1.1.1 v forcats 0.3.0 ## -- Conflicts ------------------------------------------ tidyverse_conflicts() -- ## x dplyr::filter() masks stats::filter() ## x dplyr::lag() masks stats::lag() library(cowplot) ## ## Attaching package: &amp;#39;cowplot&amp;#39; ## The following object is masked from &amp;#39;package:ggplot2&amp;#39;: ## ## ggsave  Data Make some random data:</description>
+    </item>
     
     <item>
       <title>[Spanish] Análisis de variables numéricas</title>
