@@ -30,7 +30,8 @@ df &amp;lt;- raw %&amp;gt;% gather(Group,Proliferation,1:4) Reorder groups by as
       <pubDate>Sat, 06 Oct 2018 00:00:00 +0000</pubDate>
       
       <guid>/2018/10/06/analisis-de-variables-cuantitativas/</guid>
-      <description>1 Introducción. 2 Distribución normal. 2.1 Shapiro Wilk. 2.2 D’agostino Pearson Omnibus. 2.3 Gráfico cuantil-cuantil (Q-Q plot).  3 Comparando 2 medias. 3.1 t-test independiente. 3.2 t-test pareado. 3.3 U Mann-Withney y Wilcoxon.  Referencias   1 Introducción. Una de las situaciones más comunes en investigación de ciencias médicas, es medir una variable numérica que se separa entre 2 o más grupos. Por ejemplo, en una investigación podría comparar cómo mejora la presión arterial entre pacientes sometidos a 2 tratamientos diferentes, o evaluar la producción una proteína en células expuestas a distintas dosis de un fármaco.</description>
+      <description>1 Introducción. Una de las situaciones más comunes en investigación de ciencias médicas, es medir una variable numérica que se separa entre 2 o más grupos. Por ejemplo, en una investigación podría comparar cómo mejora la presión arterial entre pacientes sometidos a 2 tratamientos diferentes, o evaluar la producción una proteína en células expuestas a distintas dosis de un fármaco.
+En estos casos, nos interesa saber si el promedio y/o la dispersión de la variable es diferente entre los grupos.</description>
     </item>
     
   </channel>

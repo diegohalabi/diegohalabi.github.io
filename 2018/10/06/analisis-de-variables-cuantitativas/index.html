@@ -59,7 +59,7 @@
 
   <article class="article">
     
-    <span class="article-duration">7 min read</span>
+    <span class="article-duration">8 min read</span>
     
 
     <h1 class="article-title">[Spanish] Análisis de variables numéricas, parte 1.</h1>
@@ -69,24 +69,7 @@
     
 
     <div class="article-content">
-      <div id="TOC">
-<ul>
-<li><a href="#introduccion."><span class="toc-section-number">1</span> Introducción.</a></li>
-<li><a href="#distribucion-normal."><span class="toc-section-number">2</span> Distribución normal.</a><ul>
-<li><a href="#shapiro-wilk."><span class="toc-section-number">2.1</span> Shapiro Wilk.</a></li>
-<li><a href="#dagostino-pearson-omnibus."><span class="toc-section-number">2.2</span> D’agostino Pearson Omnibus.</a></li>
-<li><a href="#grafico-cuantil-cuantil-q-q-plot."><span class="toc-section-number">2.3</span> Gráfico cuantil-cuantil (Q-Q plot).</a></li>
-</ul></li>
-<li><a href="#comparando-2-medias."><span class="toc-section-number">3</span> Comparando 2 medias.</a><ul>
-<li><a href="#t-test-independiente."><span class="toc-section-number">3.1</span> t-test independiente.</a></li>
-<li><a href="#t-test-pareado."><span class="toc-section-number">3.2</span> t-test pareado.</a></li>
-<li><a href="#u-mann-withney-y-wilcoxon."><span class="toc-section-number">3.3</span> U Mann-Withney y Wilcoxon.</a></li>
-</ul></li>
-<li><a href="#referencias">Referencias</a></li>
-</ul>
-</div>
-
-<div id="introduccion." class="section level1">
+      <div id="introduccion." class="section level1">
 <h1><span class="header-section-number">1</span> Introducción.</h1>
 <p>Una de las situaciones más comunes en investigación de ciencias médicas, es medir una variable numérica que se separa entre 2 o más grupos. Por ejemplo, en una investigación podría comparar cómo mejora la presión arterial entre pacientes sometidos a 2 tratamientos diferentes, o evaluar la producción una proteína en células expuestas a distintas dosis de un fármaco.</p>
 <p>En estos casos, nos interesa saber si el promedio y/o la dispersión de la variable es diferente entre los grupos.</p>
@@ -126,7 +109,7 @@
 <p>Finalmente, podemos evaluar la normalidad en forma visual con el Q-Q plot. Este gráfico compara los cuantiles de una muestra real con los cuantiles teóricos de una distribución de probabilidad.</p>
 <p>Si recordamos, un cuantil es una división en partes iguales de un set de datos. Por ejemplo, si tenemos 100 observaciones entre 1.6 m y 1.8 m, los cuantiles teóricos se formarán dividiendo en 100 partes iguales el rango 1.6 - 1.8, obteniendo 100 cuantiles de 0.2 m en el eje Y. Estos cuantiles teóricos se comparan con las 100 observaciones reales en nuestro set de datos, obteniendo una correlación (fig 3).</p>
 <p><img src="/post/2018-10-05-analisis-de-variables-cuantitativas_files/figure-html/unnamed-chunk-3-1.png" width="336" /></p>
-<p>Si utilizamos R (recomendado), la función `qqpnorm() permite crear fácilmente este gráfico. En la figura 3, se han utilizado los mismos datos que en la figura 2, y se visualiza directamente como las observaciones (puntos) se ajustan a la curva teórica (línea roja), lo que sugiere normalidad.</p>
+<p>Si utilizamos R (recomendado), la función <code>'qqpnorm()'</code> permite crear fácilmente este gráfico. En la figura 3, se han utilizado los mismos datos que en la figura 2, y se visualiza directamente como las observaciones (puntos) se ajustan a la curva teórica (línea roja), lo que sugiere normalidad.</p>
 </div>
 </div>
 <div id="comparando-2-medias." class="section level1">
@@ -138,24 +121,24 @@
 <div id="t-test-independiente." class="section level2">
 <h2><span class="header-section-number">3.1</span> t-test independiente.</h2>
 <p>Permite identificar si el promedio y las desviaciones estándar de 2 grupos difieren significativamente.</p>
-<p>Antes de realizar un t-test, se debe considerar si se cumple con los requisitos o <em>assumptions</em> <strong>???</strong>:</p>
+<p>Antes de realizar un t-test, se debe considerar si se cumple con los supuestos o <em>assumptions</em> <span class="citation">(<a href="#ref-Student:1908fk">3</a>)</span>:</p>
 <ul>
 <li><p>Requiere que los grupos sean independientes, es decir, que una observación no dependa de otras observaciones. Esto se logra utilizando una correcta técnica de muestreo aleatorio.</p></li>
 <li><p>La muestra debe ser paramétrica, es decir, debe obtenerse a partir de una distribución normal. Este assumption puede ser obviado cuando se trabaja con un tamaño muestral &gt; 15 por grupo, ya que si realizamos un test no paramétrico llegaríamos a resultados extremadamente similares.</p></li>
-<li><p>Igualdad de varianzas u homocedasticidad. Podemos evaluarlo de manera visual, o con el test de Levene, cuya H<sub>0</sub> es que las varianzas son homogéneas. Este test se aplica con la función <code>leveneTest()</code> del paquete <code>car</code>.</p></li>
+<li><p>Igualdad de varianzas u homocedasticidad. Podemos evaluarlo de manera visual, o con el test de Levene, cuya H<sub>0</sub> es que las varianzas son homogéneas. Este test se aplica con la función <code>'leveneTest()'</code> del paquete <code>'car'</code>.</p></li>
 </ul>
-<p>En R, podemos realizar el t-test con la función <code>t.test()</code>, y si lo aplicamos al ejemplo anterior tendríamos el siguiente output:</p>
+<p>En R, podemos realizar el t-test con la función <code>'t.test()'</code>, y si lo aplicamos al ejemplo anterior tendríamos el siguiente output:</p>
 <pre><code>## 
 ##  Two Sample t-test
 ## 
 ## data:  insulina by grupo
-## t = -5.5595, df = 98, p-value = 2.338e-07
+## t = -5.2633, df = 98, p-value = 8.349e-07
 ## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
-##  -6.626959 -3.140484
+##  -6.029237 -2.727593
 ## sample estimates:
 ##     mean in group HTA mean in group Control 
-##              8.826325             13.710046</code></pre>
+##              9.290493             13.668908</code></pre>
 <p>Podemos ver que el p-value es &lt; 0.001, por lo que rechazaríamos la H<sub>0</sub>. Además, podemos obtener resultados de interés clínico-fisiológico (tamaño del efecto), como el promedio de los grupos y el intervalo de confianza al 95% de la diferencia de medias.</p>
 </div>
 <div id="t-test-pareado." class="section level2">
@@ -163,10 +146,14 @@
 <p>Existen casos que el diseño experimental requiere que las muestras sean dependientes, entonces se puede optar por un t-test pareado o dependiente. Estos diseños nos permiten controlar muy bien las variables confundentes y covariables, al permitir emparejar uno o más factores entre los distintos grupos experimentales y controles.</p>
 <p>Un ejemplo clásico es en estudios de odontología, donde se utiliza el diseño de “boca dividida”. Es este diseño, se divide la arcada dental sagitalmente en un lado derecho y otro izquierdo, exponiendo al paciente al tratamiento y control en cada lado. Es evidente que todos los factores se van a repetir entre los 2 lados, por lo que se considera que los grupos están pareados o son dependientes entre si.</p>
 <p>Otros ejemplos son los Ensayos Clínicos Aleatorios de diseño cruzado, en que los mismos participantes del grupo experimental se intercambian al grupo control, o los estudios de cohorte emparejados por factores de riesgo. En el laboratorio también se realizan muchos diseños pareados, por ejemplo, si un cultivo celular separado a distintos tratamientos proviene de una misma fuente primaria, o en animales que son emparejados por ser de la misma camada.</p>
-<p>En R, lo utilizamos agregando el argumento <code>paired = True</code> a la función <code>t.test()</code>.</p>
+<p>En R, lo utilizamos agregando el argumento <code>'paired = True'</code> a la función <code>'t.test()'</code>.</p>
 </div>
-<div id="u-mann-withney-y-wilcoxon." class="section level2">
-<h2><span class="header-section-number">3.3</span> U Mann-Withney y Wilcoxon.</h2>
+<div id="u-mann-whitney-wilcoxon-test." class="section level2">
+<h2><span class="header-section-number">3.3</span> U Mann-Whitney – Wilcoxon test.</h2>
+<p>En los casos que no se cumpla el supuesto de normalidad, podemos reemplazar el t-test por el U Mann-Whitney en las muestras con observaciones independientes <span class="citation">(<a href="#ref-Mann:1947jp">4</a>)</span>, o Wilcoxon para muestras pareadas <span class="citation">(<a href="#ref-Wilcoxon:1945kw">5</a>)</span>.</p>
+<p>Ambos test son muy simples de entender, básicamente ordenan todos los datos de ambos grupos en un ranking. Si los datos provienen de la misma población, se intercalarán los valores consecutivamente, ergo aceptaríamos la H<sub>0</sub>. Si provienen de poblaciones distintas, los valores de los grupos quedarán separados, por lo que debería asumir que los grupos difieren significativamente, rechazando la H<sub>0</sub> (fig 5).</p>
+<p><img src="/post/2018-10-05-analisis-de-variables-cuantitativas_files/figure-html/unnamed-chunk-6-1.png" width="384" /></p>
+<p>Ambos test se pueden aplicar en R con la función <code>'wilcox.test()'</code>, agregando el parámetro <code>'paired = TRUE'</code> o <code>'paired = FALSE'</code> para realizar el test U Mann-Whitney o Wilcoxon respectivamente.</p>
 </div>
 </div>
 <div id="referencias" class="section level1 unnumbered">
@@ -177,6 +164,15 @@
 </div>
 <div id="ref-DAgostino:1971ia">
 <p>2. D’Agostino RB. An Omnibus Test of Normality for Moderate and Large Size Samples. Biometrika. 1971 Aug;58(2):341–9. </p>
+</div>
+<div id="ref-Student:1908fk">
+<p>3. Student. The Probable Error of a Mean. Biometrika. 1908 Mar;6(1):1. </p>
+</div>
+<div id="ref-Mann:1947jp">
+<p>4. Mann HB, Whitney DR. On a Test of Whether one of Two Random Variables is Stochastically Larger than the Other. The Annals of Mathematical Statistics. 1947 Mar;18(1):50–60. </p>
+</div>
+<div id="ref-Wilcoxon:1945kw">
+<p>5. Wilcoxon F. Individual Comparisons by Ranking Methods. Biometrics Bulletin. 1945 Dec;1(6):80. </p>
 </div>
 </div>
 </div>

@@ -313,7 +313,9 @@ code {
     font-size: inherit;
   }
 }
-
+span.header-section-number::after {
+    content: ".";
+}
 @media print {
   .header, .footer {
     display: none;
