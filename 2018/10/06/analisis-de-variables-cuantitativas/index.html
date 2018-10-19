@@ -6,8 +6,8 @@
 <meta name="generator" content="Hugo 0.49" />
 
 
-<title>[Spanish] Análisis de variables numéricas - Diego Halabi</title>
-<meta property="og:title" content="[Spanish] Análisis de variables numéricas - Diego Halabi">
+<title>[Spanish] Análisis de variables numéricas, parte 1. - Diego Halabi</title>
+<meta property="og:title" content="[Spanish] Análisis de variables numéricas, parte 1. - Diego Halabi">
 
 
 
@@ -59,25 +59,46 @@
 
   <article class="article">
     
-    <span class="article-duration">6 min read</span>
+    <span class="article-duration">7 min read</span>
     
 
-    <h1 class="article-title">[Spanish] Análisis de variables numéricas</h1>
+    <h1 class="article-title">[Spanish] Análisis de variables numéricas, parte 1.</h1>
 
     
     <span class="article-date">2018/10/06</span>
     
 
     <div class="article-content">
-      <p>Una de las situaciones más comunes en investigación de ciencias médicas, es medir una variable numérica que se separa entre 2 o más grupos. Por ejemplo, en una investigación podría comparar cómo mejora la presión arterial entre pacientes sometidos a 2 tratamientos diferentes, o evaluar la producción una proteína en células expuestas a distintas dosis de un fármaco.</p>
+      <div id="TOC">
+<ul>
+<li><a href="#introduccion."><span class="toc-section-number">1</span> Introducción.</a></li>
+<li><a href="#distribucion-normal."><span class="toc-section-number">2</span> Distribución normal.</a><ul>
+<li><a href="#shapiro-wilk."><span class="toc-section-number">2.1</span> Shapiro Wilk.</a></li>
+<li><a href="#dagostino-pearson-omnibus."><span class="toc-section-number">2.2</span> D’agostino Pearson Omnibus.</a></li>
+<li><a href="#grafico-cuantil-cuantil-q-q-plot."><span class="toc-section-number">2.3</span> Gráfico cuantil-cuantil (Q-Q plot).</a></li>
+</ul></li>
+<li><a href="#comparando-2-medias."><span class="toc-section-number">3</span> Comparando 2 medias.</a><ul>
+<li><a href="#t-test-independiente."><span class="toc-section-number">3.1</span> t-test independiente.</a></li>
+<li><a href="#t-test-pareado."><span class="toc-section-number">3.2</span> t-test pareado.</a></li>
+<li><a href="#u-mann-withney-y-wilcoxon."><span class="toc-section-number">3.3</span> U Mann-Withney y Wilcoxon.</a></li>
+</ul></li>
+<li><a href="#referencias">Referencias</a></li>
+</ul>
+</div>
+
+<div id="introduccion." class="section level1">
+<h1><span class="header-section-number">1</span> Introducción.</h1>
+<p>Una de las situaciones más comunes en investigación de ciencias médicas, es medir una variable numérica que se separa entre 2 o más grupos. Por ejemplo, en una investigación podría comparar cómo mejora la presión arterial entre pacientes sometidos a 2 tratamientos diferentes, o evaluar la producción una proteína en células expuestas a distintas dosis de un fármaco.</p>
 <p>En estos casos, nos interesa saber si el promedio y/o la dispersión de la variable es diferente entre los grupos.</p>
 <div class="figure">
 <img src="/post/2018-10-05-analisis-de-variables-cuantitativas_files/algoritmo.png" alt="Figura 1. Algoritmo para escoger el test estadístico más adecuado cuando trabaja con variables numéricas." width="700" />
 <p class="caption">Figura 1. Algoritmo para escoger el test estadístico más adecuado cuando trabaja con variables numéricas.</p>
 </div>
 <p>Sin embargo, antes de hacer estas comparaciones necesitamos evaluar algunos aspectos de los datos, como su distribución, la cantidad de grupos o la dependencia de estos grupos. La figura 1 es el algoritmo para analizar datos cuantitativos, cuando éstos se separan en 2 o más grupos.</p>
-<div id="distribucion-normal" class="section level1">
-<h1>1. Distribución normal</h1>
+<p>En este artículo nos centraremos en la distribución normal y la comparación de variables numéricas entre 2 grupos. En una siguiente entrada, continuaremos con los análisis que comparan variables numéricas ente más de grupos, y algunos aspectos de machine learning supervisado.</p>
+</div>
+<div id="distribucion-normal." class="section level1">
+<h1><span class="header-section-number">2</span> Distribución normal.</h1>
 <p>La distribución normal es la forma en que los datos se agrupan en la naturaleza, cuando han sido evaluados en forma aleatoria y, por lo tanto, representativa. Cuando los datos se ajustan a esta distribución, se le llama una muestra <strong>paramétrica</strong>.</p>
 <p>Es fundamental evaluar si nuestros datos se ajustan a esta distribución, ya que muchos test estadísticos requieren que la muestra sea paramétrica. En caso que no se ajusten, podemos elegir un test no paramétrico, o bien, normalizar los datos.</p>
 <p>Una forma sencilla de entender la distribución normal, es imaginar la estatura en una sala con 100 estudiantes. La mayoría de ellos tendrá una estatura promedio, por lo que podríamos agrupar una gran frecuencia de estudiantes que miden 1.70 m en el centro de la distribución. A medida que la estatura aumenta, la frecuencia de estudiantes va disminuyendo, de la misma forma que en las estaturas más bajas.</p>
@@ -89,79 +110,67 @@
 <li>Debe tener un número mínimo para lograr su formarse, aproximadamente &gt; 15 observaciones.</li>
 </ol>
 <p>Para poder evaluar el ajuste de nuestros datos a la distribución normal, disponemos de muchas herramientas, por lo que nos centraremos en la visualización gráfica, el test de Shapiro Wilk, el test D’agostino Pearson Omnibus, y la representación gráfica de cuantil-cuantil.</p>
-<div id="shapiro-wilk" class="section level3">
-<h3>1.1. Shapiro Wilk</h3>
+<div id="shapiro-wilk." class="section level2">
+<h2><span class="header-section-number">2.1</span> Shapiro Wilk.</h2>
 <p>Para realizar este test, se calcula el promedio y la varianza de la muestra, y se ordenan todos los datos de menor a mayor. Luego, se compara la diferencia que existe entre el primero y el último, el segundo y el penúltimo. etc. De esta forma, análisis determina un estadístico W, que se extrapola a un p-value <span class="citation">(<a href="#ref-Shapiro:1965gf">1</a>)</span>.</p>
 <p>La hipótesis nula es que los datos se ajustan a la distribución normal, por lo que podemos asumir la normalidad de nuestros datos con un p-value mayor que alfa (p &gt; 0.05).</p>
 </div>
-<div id="dagostino-pearson-omnibus" class="section level3">
-<h3>1.2. D’agostino Pearson Omnibus</h3>
+<div id="dagostino-pearson-omnibus." class="section level2">
+<h2><span class="header-section-number">2.2</span> D’agostino Pearson Omnibus.</h2>
 <p>El test de Shapiro Wilk es muy útil cuando el tamaño muestral es menor que 50, sin embargo, no es capaz de identificar la normalidad en muestras que superen este tamaño. Para resolver este problema, en el año 1971 se creó el test D’agostino Pearson Omnibus <span class="citation">(<a href="#ref-DAgostino:1971ia">2</a>)</span>.</p>
 <p>Este test estima un estadístico D, que se calcula a partir de la asimetría de la muestra y su curtosis.</p>
 <p>Al igual que en Shapir-Wilk, el estadístico D se puede extrapolar a un p-value, que se interpreta de la misma forma (hipótesis nula es ajuste a la normalidad).</p>
 </div>
-<div id="grafico-cuantil-cuantil-q-q-plot" class="section level3">
-<h3>1.3. Gráfico cuantil-cuantil (Q-Q plot)</h3>
+<div id="grafico-cuantil-cuantil-q-q-plot." class="section level2">
+<h2><span class="header-section-number">2.3</span> Gráfico cuantil-cuantil (Q-Q plot).</h2>
 <p>Finalmente, podemos evaluar la normalidad en forma visual con el Q-Q plot. Este gráfico compara los cuantiles de una muestra real con los cuantiles teóricos de una distribución de probabilidad.</p>
 <p>Si recordamos, un cuantil es una división en partes iguales de un set de datos. Por ejemplo, si tenemos 100 observaciones entre 1.6 m y 1.8 m, los cuantiles teóricos se formarán dividiendo en 100 partes iguales el rango 1.6 - 1.8, obteniendo 100 cuantiles de 0.2 m en el eje Y. Estos cuantiles teóricos se comparan con las 100 observaciones reales en nuestro set de datos, obteniendo una correlación (fig 3).</p>
 <p><img src="/post/2018-10-05-analisis-de-variables-cuantitativas_files/figure-html/unnamed-chunk-3-1.png" width="336" /></p>
 <p>Si utilizamos R (recomendado), la función `qqpnorm() permite crear fácilmente este gráfico. En la figura 3, se han utilizado los mismos datos que en la figura 2, y se visualiza directamente como las observaciones (puntos) se ajustan a la curva teórica (línea roja), lo que sugiere normalidad.</p>
 </div>
 </div>
-<div id="comparando-2-medias" class="section level1">
-<h1>2. Comparando 2 medias</h1>
+<div id="comparando-2-medias." class="section level1">
+<h1><span class="header-section-number">3</span> Comparando 2 medias.</h1>
 <p>Una situación muy común en investigación, es medir una variable numérica separada en 2 grupos. Entonces, la estadística nos ayudará a responder si las diferencias que observamos en el promedio (o mediana) se deben al azar, o bien, si podemos extrapolarlas a la población.</p>
-<p>En el ejemplo de la figura 4, se observan los resultados en la producción de insluina de cultivos de hepatocitos, que provienen de ratones hipertensos y controles (2 grupos).</p>
+<p>En el ejemplo de la figura 4, se observan los resultados en la producción de insulina de cultivos de hepatocitos, que provienen de ratones hipertensos y controles (2 grupos).</p>
 <p><img src="/post/2018-10-05-analisis-de-variables-cuantitativas_files/figure-html/unnamed-chunk-4-1.png" width="288" /></p>
 <p>¿Producen más insluina los ratones controles? ¿Es significativa esa diferencia?</p>
-<div id="t-test" class="section level3">
-<h3>2.1. t-test</h3>
+<div id="t-test-independiente." class="section level2">
+<h2><span class="header-section-number">3.1</span> t-test independiente.</h2>
 <p>Permite identificar si el promedio y las desviaciones estándar de 2 grupos difieren significativamente.</p>
 <p>Antes de realizar un t-test, se debe considerar si se cumple con los requisitos o <em>assumptions</em> <strong>???</strong>:</p>
 <ul>
-<li><p>Requiere que los grupos sean independientes, es decir, que una observación no dependa de otras observaciones. Esto se logra utilizando una correcta técnica de muestreo aleatorio. En caso que el diseño experimental requiera que las muestras sean dependientes, se puede optar por un t-test dependiente.</p></li>
+<li><p>Requiere que los grupos sean independientes, es decir, que una observación no dependa de otras observaciones. Esto se logra utilizando una correcta técnica de muestreo aleatorio.</p></li>
 <li><p>La muestra debe ser paramétrica, es decir, debe obtenerse a partir de una distribución normal. Este assumption puede ser obviado cuando se trabaja con un tamaño muestral &gt; 15 por grupo, ya que si realizamos un test no paramétrico llegaríamos a resultados extremadamente similares.</p></li>
-<li><p>Igualdad de varianzas. Se revisará con mayor detalle en el punto 3.1.</p></li>
+<li><p>Igualdad de varianzas u homocedasticidad. Podemos evaluarlo de manera visual, o con el test de Levene, cuya H<sub>0</sub> es que las varianzas son homogéneas. Este test se aplica con la función <code>leveneTest()</code> del paquete <code>car</code>.</p></li>
 </ul>
-<p>Si realizamos un t-test al ejemlpo anterior, tendríamos el siguente output:</p>
+<p>En R, podemos realizar el t-test con la función <code>t.test()</code>, y si lo aplicamos al ejemplo anterior tendríamos el siguiente output:</p>
 <pre><code>## 
 ##  Two Sample t-test
 ## 
 ## data:  insulina by grupo
-## t = -3.1115, df = 98, p-value = 0.002439
+## t = -5.5595, df = 98, p-value = 2.338e-07
 ## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
-##  -4.0033102 -0.8854007
+##  -6.626959 -3.140484
 ## sample estimates:
 ##     mean in group HTA mean in group Control 
-##              10.30500              12.74936</code></pre>
+##              8.826325             13.710046</code></pre>
 <p>Podemos ver que el p-value es &lt; 0.001, por lo que rechazaríamos la H<sub>0</sub>. Además, podemos obtener resultados de interés clínico-fisiológico (tamaño del efecto), como el promedio de los grupos y el intervalo de confianza al 95% de la diferencia de medias.</p>
 </div>
-<div id="u-mann-withney-y-wilcoxon" class="section level3">
-<h3>2.2. U Mann-Withney y Wilcoxon</h3>
+<div id="t-test-pareado." class="section level2">
+<h2><span class="header-section-number">3.2</span> t-test pareado.</h2>
+<p>Existen casos que el diseño experimental requiere que las muestras sean dependientes, entonces se puede optar por un t-test pareado o dependiente. Estos diseños nos permiten controlar muy bien las variables confundentes y covariables, al permitir emparejar uno o más factores entre los distintos grupos experimentales y controles.</p>
+<p>Un ejemplo clásico es en estudios de odontología, donde se utiliza el diseño de “boca dividida”. Es este diseño, se divide la arcada dental sagitalmente en un lado derecho y otro izquierdo, exponiendo al paciente al tratamiento y control en cada lado. Es evidente que todos los factores se van a repetir entre los 2 lados, por lo que se considera que los grupos están pareados o son dependientes entre si.</p>
+<p>Otros ejemplos son los Ensayos Clínicos Aleatorios de diseño cruzado, en que los mismos participantes del grupo experimental se intercambian al grupo control, o los estudios de cohorte emparejados por factores de riesgo. En el laboratorio también se realizan muchos diseños pareados, por ejemplo, si un cultivo celular separado a distintos tratamientos proviene de una misma fuente primaria, o en animales que son emparejados por ser de la misma camada.</p>
+<p>En R, lo utilizamos agregando el argumento <code>paired = True</code> a la función <code>t.test()</code>.</p>
 </div>
-</div>
-<div id="comparando-mas-de-2-medias" class="section level1">
-<h1>3. Comparando más de 2 medias</h1>
-<p>Si deseamos comparar más de 2 grupos, no podemos utilizar t-test o alguna de sus aproximaciones <em>no-paramétricas</em> repitiéndolo varias veces, ya que se pierde potencia estadística considerablemente por cada grupo extra.</p>
-<p>Es importante mencionar que los test presentados a continuación solo permiten identificar si un grupo es diferente al resto. Si queremos saber cuál o cuáles grupos son diferentes, debemos realizar un análisis <em>post-hoc</em> posterior, que también serán abordados.</p>
-<p><img src="/post/2018-10-05-analisis-de-variables-cuantitativas_files/figure-html/unnamed-chunk-6-1.png" width="336" /></p>
-<div id="homogeneidad-de-las-varianzas" class="section level3">
-<h3>3.1. Homogeneidad de las varianzas</h3>
-<p>Si deseamos evaluar más de 2 grupos, y los datos tienen una distribución normal, podemos utilizar Anova. Anova es una abreviación de “Análisis de la Varianza”, por lo que uno de sus principales presuntos es que las varianzas entre los grupos debe ser homogénea. Para probar esto, podemos realizar el test de Levene.</p>
-</div>
-<div id="anova" class="section level3">
-<h3>3.2. Anova</h3>
-</div>
-<div id="kruskal-wallis" class="section level3">
-<h3>3.3. Kruskal-Wallis</h3>
-</div>
-<div id="two-way-anova" class="section level3">
-<h3>3.4. Two-way Anova</h3>
+<div id="u-mann-withney-y-wilcoxon." class="section level2">
+<h2><span class="header-section-number">3.3</span> U Mann-Withney y Wilcoxon.</h2>
 </div>
 </div>
 <div id="referencias" class="section level1 unnumbered">
-<h1>5. Referencias</h1>
+<h1>Referencias</h1>
 <div id="refs" class="references">
 <div id="ref-Shapiro:1965gf">
 <p>1. Shapiro SS, Wilk MB. An Analysis of Variance Test for Normality (Complete Samples). Biometrika. 1965 Dec;52(3/4):591–22. </p>
